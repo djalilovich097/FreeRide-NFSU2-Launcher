@@ -1,0 +1,6 @@
+*.secret
+*.key
+*.png
+*.env
+private/
+node_modules/

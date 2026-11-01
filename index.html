@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="dark">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'; script-src 'self' https://telegram.org; style-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; upgrade-insecure-requests">
+  <title>FreeRide · Underground 2</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script src="https://telegram.org/js/telegram-web-app.js" defer></script>
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <main class="page">
+    <header class="head">
+      <div class="monogram" aria-hidden="true">FR</div>
+      <span class="brand">FREERIDE <span>RACING</span></span>
+      <span class="environment">PRIVATE TEST</span>
+    </header>
+    <section class="hero">
+      <p class="eyebrow"><span class="dot"></span> DEVELOPMENT BUILD · NFSU2</p>
+      <h1>UNDERGROUND<br><em>IS BACK.</em></h1>
+      <p class="intro">Оригинальный Underground 2 в браузере. Игровой движок работает на компьютере FreeRide, а этот адрес остаётся постоянным, даже когда тестовый сервер меняется.</p>
+      <div class="tags">
+        <span>PC / CHROME</span>
+        <span>ANDROID / CHROME</span>
+        <span>WEBASSEMBLY</span>
+      </div>
+    </section>
+    <section class="panel" aria-labelledby="entry-title">
+      <div class="panel-head">
+        <div>
+          <p class="mini">ДОСТУП К ТЕСТИРОВАНИЮ</p>
+          <h2 id="entry-title">Запуск игры</h2>
+        </div>
+        <span class="private"><span class="lock" aria-hidden="true">●</span> Закрытая версия</span>
+      </div>
+      <p id="service-status" class="status" role="status">Проверяем адрес игрового сервера…</p>
+      <label for="access">Ключ приглашения</label>
+      <input id="access" type="password" placeholder="Вставь ключ или ссылку из QR" autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="350">
+      <p class="help">Код есть только у участников закрытого теста. Он не публикуется в GitHub и не передаётся Telegram.</p>
+      <button id="launch" class="launch" type="button" disabled><span>ЗАПУСТИТЬ NFSU2</span><span aria-hidden="true">↗</span></button>
+      <button id="copy" class="copy" type="button" disabled>Скопировать ссылку для Chrome</button>
+      <p id="message" class="message" role="status" aria-live="polite"></p>
+    </section>
+    <section class="details">
+      <div class="detail"><strong>01</strong><span>Игра запускается во внешнем Chrome, если Telegram не поддерживает WebAssembly threads.</span></div>
+      <div class="detail"><strong>02</strong><span>Игровые файлы не хранятся на этой странице. Они доступны только по закрытому приглашению.</span></div>
+      <div class="detail"><strong>03</strong><span>Пока сервер расположен на тестовом ПК, он может быть недоступен, когда компьютер выключен.</span></div>
+    </section>
+    <footer>FREERIDE RACING · ENGINEERING PREVIEW <span>NO GAME DATA HOSTED HERE</span></footer>
+  </main>
+</body>
+</html>
