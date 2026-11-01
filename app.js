@@ -1,119 +1,78 @@
-// Public, original-code launcher only. NEVER bundle NFSU2 assets, access
-// tokens or Telegram initData into the GitHub Pages repository.
+// Minimal FreeRide NFSU2 launcher: no manual key entry.
+// A Telegram bot verifies FreeRide Team membership and issues a 2-minute ticket.
+// Legacy admin access key in URL fragment is retained for diagnostics only.
 (() => {
-  'use strict';
-  const access = document.getElementById('access');
-  const start = document.getElementById('launch');
-  const copy = document.getElementById('copy');
-  const status = document.getElementById('service-status');
-  const message = document.getElementById('message');
-  let upstream = '';
-  let invited = '';
-  const rKey = /^[A-Za-z0-9_-]{32,80}$/;
-
-  const rawFragment = new URLSearchParams(location.hash.substring(1)).get('access') || '';
-  if (rKey.test(rawFragment)) {
-    invited = rawFragment;
-    // Fragment is never sent to GitHub Pages, and is removed from address bar.
-    history.replaceState(null, '', location.pathname);
+ 'use strict';
+ const start=document.getElementById('launch'),copy=document.getElementById('copy');
+ const status=document.getElementById('service-status'),message=document.getElementById('message');
+ const bot='https://t.me/freeride_team_bot?start=nfsplay';
+ const params=new URLSearchParams(location.hash.slice(1));
+ const issued=params.get('ticket')||'';
+ const legacy=params.get('access')||'';
+ const hasTicket=/^[A-Za-z0-9_-]{30,280}\.[A-Za-z0-9_-]{43}$/.test(issued);
+ const hasLegacy=/^[A-Za-z0-9_-]{32,80}$/.test(legacy);
+ let upstream='',ticket=hasTicket?issued:'',access=hasLegacy?legacy:'';
+ if(location.hash)history.replaceState(null,'',location.pathname+location.search);
+ function say(t){message.textContent=t;}
+ function browserOpen(url){
+  const b=window.TelegramWebviewProxy;
+  if(b&&typeof b.postEvent==='function'){
+   b.postEvent('web_app_open_link',JSON.stringify({url,try_browser:'chrome'}));return true;
   }
-
-  function currentKey() {
-    const raw = access.value.trim() || invited;
-    if (rKey.test(raw)) return raw;
-    try {
-      const url = new URL(raw);
-      const key = url.searchParams.get('fr_access') || '';
-      return rKey.test(key) ? key : '';
-    } catch { return ''; }
+  const tg=window.Telegram?.WebApp;
+  if(tg?.openLink){tg.openLink(url,{try_instant_view:false});return true;}
+  return false;
+ }
+ function launchUrl(){
+  if(!upstream)return null;
+  if(!ticket&&!access)return null;
+  const u=new URL(upstream);u.pathname='/';
+  if(ticket)u.searchParams.set('fr_ticket',ticket);
+  else u.searchParams.set('fr_access',access);
+  return u.toString();
+ }
+ function render(){
+  const tokenReady=Boolean(ticket||access);
+  start.disabled=!upstream;
+  copy.disabled=!(upstream&&tokenReady);
+  start.querySelector('span').textContent=tokenReady?'ЗАПУСТИТЬ NFSU2':'ПОЛУЧИТЬ ДОСТУП ЧЕРЕЗ TELEGRAM';
+ }
+ async function findServer(){
+  try{
+   const r=await fetch('./bridge.json?v='+Date.now(),{cache:'no-store'});
+   if(!r.ok)throw Error();
+   const conf=await r.json(),candidate=new URL(conf.tunnel);
+   if(candidate.protocol!=='https:'||candidate.username||candidate.password||
+      candidate.pathname!=='/'||candidate.search||candidate.hash||
+      !/^[a-z0-9-]+\.trycloudflare\.com$/i.test(candidate.hostname)||
+      conf.state!=='testing')throw Error();
+   upstream=candidate.origin;status.classList.remove('offline');
+   status.textContent=ticket?'Личный пропуск получен. Нажми «Запустить» до истечения двух минут.':
+     'Сервер настроен. Вход через бота FreeRide, без ручного ключа.';
+  }catch{
+   upstream='';status.classList.add('offline');
+   status.textContent='Тестовый сервер недоступен. Попробуй позже.';
+  }render();
+ }
+ start.addEventListener('click',()=>{
+  if(!upstream)return;
+  const url=launchUrl();
+  if(!url){
+   try{if(browserOpen(bot))return;}catch{}
+   const a=document.createElement('a');a.href=bot;a.rel='noopener noreferrer';a.target='_blank';a.click();
+   say('Получить личный пропуск можно через @freeride_team_bot.');
+   return;
   }
-  function setMessage(text) { message.textContent = text; }
-  function updateControls() {
-    start.disabled = copy.disabled = !(upstream && currentKey());
-    if (!access.value && invited) access.placeholder = 'Код из приглашения получен ✓';
-  }
-  access.addEventListener('input', () => {
-    invited = '';
-    updateControls();
-    setMessage('');
-  });
-
-  // Intentionally never persist the bearer token to localStorage / GitHub.
-  function gameUrl() {
-    if (!upstream) return '';
-    const key = currentKey();
-    if (!key) return '';
-    const u = new URL(upstream);
-    u.pathname = '/';
-    u.searchParams.set('fr_access', key);
-    return u.toString();
-  }
-  async function loadServer() {
-    try {
-      const resp = await fetch('./bridge.json?nocache=' + Date.now(), {cache:'no-store'});
-      if (!resp.ok) throw Error('Сервер не настроен');
-      const config = await resp.json();
-      const candidate = new URL(config.tunnel);
-      if (candidate.protocol !== 'https:' || candidate.username || candidate.password ||
-          candidate.pathname !== '/' || candidate.search || candidate.hash ||
-          !/^[a-z0-9-]+\.trycloudflare\.com$/i.test(candidate.hostname) ||
-          config.state !== 'testing') throw Error('Недопустимый адрес тестового сервера');
-      upstream = candidate.origin;
-      status.textContent = 'Тестовый адрес получен. Для запуска нужен приватный ключ.';
-      status.classList.remove('offline');
-      updateControls();
-    } catch {
-      upstream = '';
-      status.textContent = 'Тестовый сервер сейчас недоступен. Попробуй позже.';
-      status.classList.add('offline');
-      updateControls();
-    }
-  }
-
-  // Use the real Telegram native bridge, but NEVER leak Telegram launch params.
-  function tryTelegramBrowser(url) {
-    // Native bridge supports the documented try_browser=chrome hint. Use it
-    // first, because the high-level SDK does not expose a Chrome hint.
-    const bridge = window.TelegramWebviewProxy;
-    if (bridge && typeof bridge.postEvent === 'function') {
-      bridge.postEvent('web_app_open_link', JSON.stringify({url,try_browser:'chrome'}));
-      return true;
-    }
-    const tg = window.Telegram && window.Telegram.WebApp;
-    if (tg && typeof tg.openLink === 'function') {
-      tg.openLink(url, {try_instant_view:false});
-      return true;
-    }
-    return false;
-  }
-  start.addEventListener('click', () => {
-    const url = gameUrl();
-    if (!url) {setMessage('Введи ключ доступа из приглашения.');return;}
-    try {
-      if (tryTelegramBrowser(url)) {
-        setMessage('Открываем игру во внешнем браузере…');
-        return;
-      }
-    } catch {
-      // Browser fallback still requires a trusted user gesture.
-    }
-    const link = document.createElement('a');
-    link.href = url;
-    link.rel = 'noreferrer noopener';
-    link.target = '_blank';
-    link.click();
-    setMessage('Если Chrome не открылся, используй кнопку копирования.');
-  });
-  copy.addEventListener('click', async () => {
-    const url = gameUrl();
-    if (!url) return;
-    try {
-      await navigator.clipboard.writeText(url);
-      setMessage('Ссылка для Chrome скопирована. Никому не пересылай ключ доступа.');
-    } catch { setMessage('Не удалось скопировать ссылку. Открой в Chrome вручную.'); }
-  });
-
-  window.Telegram?.WebApp?.ready?.();
-  updateControls();
-  void loadServer();
+  try{if(browserOpen(url)){say('Открываем игру в Chrome…');return;}}catch{}
+  const a=document.createElement('a');
+  a.href=url;a.rel='noopener noreferrer';a.target='_blank';a.click();
+  say('Если Chrome не открылся, скопируй временную ссылку.');
+ });
+ copy.addEventListener('click',async()=>{
+  const url=launchUrl();if(!url)return;
+  try{await navigator.clipboard.writeText(url);say('Временная ссылка для Chrome скопирована. Не пересылай её другим.');}
+  catch{say('Не получилось скопировать ссылку.');}
+ });
+ window.Telegram?.WebApp?.ready?.();
+ render();void findServer();
 })();
