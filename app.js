@@ -23,6 +23,18 @@
   if(tg?.openLink){tg.openLink(url,{try_instant_view:false});return true;}
   return false;
  }
+ function openTelegramBot(){
+  const tg=window.Telegram?.WebApp;
+  if(tg&&typeof tg.openTelegramLink==='function'){
+    tg.openTelegramLink(bot);return;
+  }
+  const bridge=window.TelegramWebviewProxy;
+  if(bridge&&typeof bridge.postEvent==='function'){
+    bridge.postEvent('web_app_open_tg_link',JSON.stringify({path:'/freeride_team_bot?start=nfsplay'}));
+    return;
+  }
+  location.href=bot;
+ }
  function launchUrl(){
   if(!upstream)return null;
   if(!ticket&&!access)return null;
@@ -58,8 +70,7 @@
   if(!upstream)return;
   const url=launchUrl();
   if(!url){
-   try{if(browserOpen(bot))return;}catch{}
-   const a=document.createElement('a');a.href=bot;a.rel='noopener noreferrer';a.target='_blank';a.click();
+   openTelegramBot();
    say('Получить личный пропуск можно через @freeride_team_bot.');
    return;
   }
