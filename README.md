@@ -1,5 +1,9 @@
 # FreeRide NFSU2 · stable private launcher
 
+> **LIVE 2026-11-02:** the protected game at the tunnel behind this launcher now binds browser-local `NFSU2` careers to the **server-verified Telegram ID**. Each Telegram member receives a distinct HMAC one-use invitation via `@freeride_team_bot`; the gateway supplies a separate OPFS save folder `tg-<UID>`. A legacy `save` career is copied only after explicit owner consent. This is NOT yet automatic cross-device Cloud Save synchronization or Telegram-based native Online persona authentication.
+>
+> Full source, test evidence, backup and next-chat handoff are in the **PRIVATE** game repository: [FreeRide NFSU2 current handoff](https://github.com/djalilovich097/FreeRide-NFSU2-Web/blob/freeride/telegram-source-port/docs/FREERIDE_NFSU2_HANDOFF_20261102.md). The static launcher intentionally hosts no game code/WASM/EA files.
+
 **Public GitHub Pages landing only.** No game data, Telegram bot token, launch key, WASM, EA assets, passwords, or player information is hosted in this repository.
 
 - `index.html`, `styles.css`, `app.js`: original static launcher for FreeRide.
