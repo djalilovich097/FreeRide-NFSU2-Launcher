@@ -72,14 +72,16 @@
 
   // Use the real Telegram native bridge, but NEVER leak Telegram launch params.
   function tryTelegramBrowser(url) {
-    const tg = window.Telegram && window.Telegram.WebApp;
-    if (tg && typeof tg.openLink === 'function') {
-      tg.openLink(url, {try_instant_view:false});
-      return true;
-    }
+    // Native bridge supports the documented try_browser=chrome hint. Use it
+    // first, because the high-level SDK does not expose a Chrome hint.
     const bridge = window.TelegramWebviewProxy;
     if (bridge && typeof bridge.postEvent === 'function') {
       bridge.postEvent('web_app_open_link', JSON.stringify({url,try_browser:'chrome'}));
+      return true;
+    }
+    const tg = window.Telegram && window.Telegram.WebApp;
+    if (tg && typeof tg.openLink === 'function') {
+      tg.openLink(url, {try_instant_view:false});
       return true;
     }
     return false;
