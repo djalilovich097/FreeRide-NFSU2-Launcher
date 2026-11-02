@@ -1,4 +1,4 @@
-# FreeRide NFSU2 · stable private launcher
+# FreeRide NFSU2 · public launcher for a private game
 
 > **LIVE 2026-11-02:** the protected game uses a **server-verified Telegram ID** for account-specific careers, automatic encrypted cross-device Cloud Saves and an exclusive game session (one playing device per Telegram identity, with safe expiry after a lost connection). `Emil097` was recovered into the actual Telegram-bound vault, and the native Online name claim was transferred after confirming both legacy/new credentials. The launcher itself is ONLY the public GitHub Pages entry, not an alternative game server or a storage service. **Full operations and code now live in one private `FreeRide-NFSU2-Web` repository**, including the former Racing Hub service and Supabase mirror.
 >
