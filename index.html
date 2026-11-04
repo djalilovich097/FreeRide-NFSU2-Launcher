@@ -7,57 +7,69 @@
   <meta name="color-scheme" content="dark">
   <meta name="referrer" content="no-referrer">
   <meta http-equiv="Content-Security-Policy" content="default-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'; script-src 'self' https://telegram.org; style-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; upgrade-insecure-requests">
-  <title>FreeRide Racing · Игровой лаунчер</title>
-  <link rel="stylesheet" href="./styles.css?v=20261105-security-freeze">
+  <title>FreeRide Racing · Игры и штаб команды</title>
+  <link rel="stylesheet" href="./styles.css?v=20261105-hub">
   <script src="https://telegram.org/js/telegram-web-app.js" defer></script>
-  <script src="./app.js?v=20261105-security-freeze" defer></script>
+  <script src="./app.js?v=20261105-hub" defer></script>
 </head>
 <body>
   <main class="shell">
     <header class="masthead">
       <div class="brandmark" aria-hidden="true"><span>F</span><span>R</span></div>
       <div class="wordmark"><span>FREERIDE</span><strong>RACING</strong></div>
-      <div class="version"><span class="live-dot"></span> TEST BUILD</div>
+      <div class="version"><span class="live-dot"></span> TEAM GARAGE</div>
     </header>
 
     <section class="intro">
-      <p class="eyebrow">FREE RIDE TEAM / GAME COLLECTION</p>
-      <h1>ОДИН ГАРАЖ.<br><em>ДВЕ ЛЕГЕНДЫ.</em></h1>
-      <p class="subtitle">Твой игровой гараж в Telegram. Выбери игру, получи личный доступ через FreeRideBOT и продолжай свою карьеру.</p>
+      <p class="eyebrow">ДВА ГОРОДА · ОДНА КОМАНДА</p>
+      <h1>НОЧЬ В БЭЙВЬЮ.<br><em>ПОГОНЯ В РОКПОРТЕ.</em></h1>
+      <p class="subtitle">Тюнинг, ночные заезды и полиция на хвосте. Выбирай игру, а когда захочешь узнать, кто уже на трассе, загляни в Racing Hub.</p>
     </section>
 
     <section class="library" aria-labelledby="games-heading">
-      <div class="section-heading"><h2 id="games-heading">ИГРОВАЯ БИБЛИОТЕКА</h2><span>02 / AVAILABLE</span></div>
+      <div class="section-heading"><h2 id="games-heading">ГАРАЖ FREERIDE</h2><span>02 ИГРЫ / 01 ШТАБ</span></div>
       <article class="game-card underground">
-        <div class="game-art" aria-hidden="true"><div class="art-city"></div><div class="art-number">02</div><span class="art-tag">BAYVIEW · NIGHT RUN</span></div>
+        <div class="game-art" aria-hidden="true"><div class="art-city"></div><div class="art-number">02</div><span class="art-tag">BAYVIEW · AFTER DARK</span></div>
         <div class="game-body">
-          <div class="game-meta"><span class="state"><span class="indicator"></span> ONLINE RACING</span><span class="year">2004</span></div>
+          <div class="game-meta"><span class="state"><span class="indicator"></span> ГОНОЧНЫЙ ГОРОД</span><span class="year">2004</span></div>
           <h3>NEED FOR SPEED<br><strong>UNDERGROUND 2</strong></h3>
-          <p>Ночные гонки, тюнинг и Free Roam. Отдельная карьера, онлайн и рейтинги команды.</p>
-          <div class="chips"><span>PC / CHROME</span><span>ANDROID / CHROME</span></div>
-          <button id="play-u2" type="button" class="play-button">ИГРАТЬ В UNDERGROUND 2 <span aria-hidden="true">↗</span></button>
-          <p id="u2-status" class="game-status" role="status">Проверяем адрес закрытого сервера…</p>
+          <p>Ночной Бэйвью, неон и гараж, из которого хочется выезжать снова и снова. Собирай свою машину, катайся в Free Roam и встречайся с командой в онлайне.</p>
+          <div class="chips"><span>ТЮНИНГ</span><span>FREE ROAM</span><span>ОНЛАЙН</span></div>
+          <button id="play-u2" type="button" class="play-button">ЗАПУСТИТЬ UNDERGROUND 2 <span aria-hidden="true">›</span></button>
+          <p id="u2-status" class="game-status" role="status">Для входа нужен личный пропуск из FreeRideBOT.</p>
         </div>
       </article>
 
       <article class="game-card wanted">
-        <div class="game-art" aria-hidden="true"><div class="art-road"></div><div class="art-number">15</div><span class="art-tag">ROCKPORT · BLACKLIST</span></div>
+        <div class="game-art" aria-hidden="true"><div class="art-road"></div><div class="art-number">15</div><span class="art-tag">ROCKPORT · MOST WANTED</span></div>
         <div class="game-body">
-          <div class="game-meta"><span class="state amber"><span class="indicator"></span> PRIVATE PREVIEW</span><span class="year">2005</span></div>
+          <div class="game-meta"><span class="state amber"><span class="indicator"></span> ЗАКРЫТЫЙ ТЕСТ</span><span class="year">2005</span></div>
           <h3>NEED FOR SPEED<br><strong>MOST WANTED</strong></h3>
-          <p>Рокпорт, Чёрный список и погони. Русский интерфейс и собственные облачные сохранения MW.</p>
-          <div class="chips"><span>CHROME / TELEGRAM</span><span>OWNER ACCESS</span></div>
-          <button id="play-mw" type="button" class="play-button amber">ИГРАТЬ В MOST WANTED <span aria-hidden="true">↗</span></button>
-          <p id="mw-status" class="game-status" role="status">Доступ к тестовой версии выдаёт FreeRideBOT.</p>
+          <p>Рокпорт. Пятнадцать соперников в Чёрном списке. Копы, которым явно нечем заняться. Прокладывай путь к вершине в русской версии с отдельной карьерой.</p>
+          <div class="chips"><span>ЧЁРНЫЙ СПИСОК</span><span>ПОГОНИ</span><span>РУССКАЯ ВЕРСИЯ</span></div>
+          <button id="play-mw" type="button" class="play-button amber">ЗАПУСТИТЬ MOST WANTED <span aria-hidden="true">›</span></button>
+          <p id="mw-status" class="game-status" role="status">Пока доступно только владельцу FreeRide.</p>
+        </div>
+      </article>
+
+      <article class="game-card hub">
+        <div class="game-art" aria-hidden="true"><div class="art-number">FR</div><span class="art-tag">TEAM HQ · BAYVIEW ONLINE</span></div>
+        <div class="game-body">
+          <div class="game-meta"><span class="state mint"><span class="indicator"></span> ШТАБ ГОНЩИКОВ</span><span class="year">U2</span></div>
+          <h3>FREERIDE<br><strong>RACING HUB</strong></h3>
+          <p>Кто сейчас колесит по Бэйвью? Смотри игроков в сети, таблицы лидеров по шести дисциплинам и зови друзей в Free Roam. Рейтинг считает только настоящие онлайн-заезды.</p>
+          <div class="chips"><span>ИГРОКИ В СЕТИ</span><span>РЕЙТИНГИ</span><span>ВСТРЕЧИ</span></div>
+          <button id="open-hub" type="button" class="play-button mint">ЗАЙТИ В RACING HUB <span aria-hidden="true">›</span></button>
+          <p id="hub-status" class="game-status" role="status">Проверяем адрес штаба команды…</p>
         </div>
       </article>
     </section>
 
     <section class="foot-panel">
-      <div class="foot-icon" aria-hidden="true">⌁</div>
-      <div><h2>ПРОГРЕСС НЕ СМЕШИВАЕТСЯ</h2><p>У каждой игры отдельные сохранения и проверка доступа. Этот лаунчер не хранит пароли, игровые файлы или личные профили.</p></div>
+      <div class="foot-icon" aria-hidden="true">✦</div>
+      <div><h2>ТВОЯ КАРЬЕРА ОСТАЁТСЯ ТВОЕЙ</h2><p>Underground 2 и Most Wanted хранят прогресс раздельно. В MW после гонки нажми «Остановить игру» и дождись подтверждения сохранения.</p></div>
     </section>
-    <footer class="footer"><span>FREERIDE RACING / 2026</span><span>BUILT FOR THE TEAM</span></footer>
+    <footer class="footer"><span>FREERIDE RACING / 2026</span><span>MADE FOR THE CREW</span></footer>
   </main>
   <div id="toast" role="status" aria-live="polite" class="toast" hidden></div>
 </body>

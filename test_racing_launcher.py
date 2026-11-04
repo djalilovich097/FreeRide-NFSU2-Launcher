@@ -33,10 +33,10 @@ def run():
     page=ctx.new_page()
     page.goto(url,wait_until="domcontentloaded")
     page.wait_for_function("document.getElementById('u2-status').textContent.includes('Личный пропуск')")
-    assert page.locator(".game-card").count()==2
+    assert page.locator(".game-card").count()==3
     assert page.locator("#play-u2").is_enabled()
     assert page.locator("#play-mw").is_enabled()
-    assert page.locator("h1").inner_text().startswith("ОДИН ГАРАЖ")
+    assert page.locator("h1").inner_text().startswith("НОЧЬ В БЭЙВЬЮ.")
     assert page.evaluate("document.documentElement.scrollWidth<=innerWidth"),"Horizontal overflow on mobile"
     page.locator("#play-u2").click()
     event=page.evaluate("window.testEvents.at(-1)")
@@ -49,9 +49,22 @@ def run():
     print("RACING_MOBILE_SINGLE_LAUNCHER_BOTH_BOT_PATHS_PASS",flush=True)
     page.screenshot(path=str(ROOT/"qa-racing-mobile.png"),full_page=True)
 
+    hubpage=ctx.new_page()
+    hubpage.route("**/hub/",lambda route:route.fulfill(
+        status=200,content_type="text/html",body="<title>Racing Hub QA</title>"))
+    hubpage.goto(url,wait_until="domcontentloaded")
+    hubpage.locator("#open-hub").wait_for(state="visible")
+    hubpage.wait_for_function("!document.getElementById('open-hub').disabled")
+    hubpage.locator("#open-hub").click()
+    hubpage.wait_for_url("**/hub/")
+    target=json.loads((ROOT/"bridge.json").read_text(encoding="utf8"))["tunnel"]+"hub/"
+    assert hubpage.url==target,hubpage.url
+    hubpage.close()
+    print("RACING_HUB_THIRD_CARD_ROUTE_PASS",flush=True)
+
     ticket="A"*48+"."+"B"*43
+    page.goto("about:blank")
     page.goto(url+"#ticket="+ticket,wait_until="domcontentloaded")
-    page.reload(wait_until="domcontentloaded")  # same-document hash navigation does not re-run app.js
     page.wait_for_timeout(650)
     assert 'одноразовый' in page.locator('#u2-status').inner_text(),page.locator('#u2-status').inner_text()
     assert "#" not in page.url,"Sensitive launch token stayed in address"
@@ -78,7 +91,7 @@ def run():
     ctx2=browser.new_context(viewport={"width":1360,"height":860})
     ctx2.route("https://telegram.org/**",lambda route:route.abort())
     wide=ctx2.new_page();wide.goto(url,wait_until="domcontentloaded")
-    assert wide.locator(".game-card").count()==2
+    assert wide.locator(".game-card").count()==3
     assert wide.evaluate("document.documentElement.scrollWidth<=innerWidth"),"Desktop horizontal overflow"
     wide.screenshot(path=str(ROOT/"qa-racing-desktop.png"),full_page=True)
     print("RACING_DESKTOP_RENDER_PASS",flush=True)

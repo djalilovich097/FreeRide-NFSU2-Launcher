@@ -1,5 +1,7 @@
 # FreeRide Racing Launcher
 
+> **2026-11-05:** Three cards now: Underground 2, Most Wanted and the returning **Racing Hub**. The Hub uses the same current U2 tunnel's read-only `/hub/` route from `bridge.json`, not a second tunnel. It shows only real NFSU2 online/player data, not MW scores. Game access rules are unchanged.
+
 > **Security freeze (2026-11-05):** see [FREERIDE_RACING_FREEZE_20261105.md](FREERIDE_RACING_FREEZE_20261105.md). Legacy operator password links are no longer accepted; use Telegram's one-time U2 ticket or signed MW WebApp.
 
 **Permanent entry:** https://djalilovich097.github.io/FreeRide-NFSU2-Launcher/
@@ -16,7 +18,7 @@ As of 2026-11-04, the existing public GitHub Pages launcher is the **single Free
 
 ## Technical layout
 
-- `index.html`, `styles.css`: mobile-first two-card game selection.
+- `index.html`, `styles.css`: mobile-first two-game + Racing Hub navigation.
 - `app.js`: Telegram WebApp/deep-link and Chrome opening logic, compatible with U2 `#ticket` only. Old `#access` operator links are stripped and rejected.
 - `bridge.json`: U2's current *public* Cloudflare Quick Tunnel origin only. The existing watchdog/refresh script in private `FreeRide-NFSU2-Web` validates 401 on protected WASM before updating the hostname. It must continue to work with the old repository path.
 - MW public origin is validated by the bot on its private machine, not stored on this static page.

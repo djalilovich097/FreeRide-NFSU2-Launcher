@@ -31,3 +31,12 @@ button{font:inherit}button:focus-visible{outline:3px solid #b7defb;outline-offse
 @media(max-width:720px){.intro{padding:34px 0 26px}.game-card{grid-template-columns:1fr}.game-art{min-height:147px;max-height:165px}.art-number{font-size:155px}.art-tag{bottom:12px}.game-body{padding:20px}.game-body h3{font-size:25px}.version{font-size:9px}.chips{margin:3px 0 14px}}
 @media(max-width:360px){.version{display:none}.shell{padding:0 12px}.intro h1{letter-spacing:-1.5px}.game-body{padding:17px}.subtitle{font-size:14px}}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+
+/* Racing Hub uses the same card system as both games, with its own identity. */
+.hub .game-art{background:linear-gradient(138deg,#155a55,#0b292d 58%,#061b24)}
+.hub .game-art::after{transform:rotate(-7deg);border-top:4px solid #8ae6c78a;background:linear-gradient(157deg,#3ab69d5c,transparent 68%);box-shadow:0 -13px 55px #4cdabb37}
+.hub .art-number{color:#9ff8d50e;text-shadow:1px 1px 50px #66ffd52b;letter-spacing:-15px}
+.hub .game-body h3 strong{color:#8ae5c7}
+.state.mint{color:#8ae5c7}
+.state.mint .indicator{background:#5fd9af}
+.play-button.mint{border-color:#8ae5c7;background:linear-gradient(115deg,#82e3c6,#43a994);color:#071f1a}

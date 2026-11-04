@@ -3,7 +3,7 @@
 ## Current permanent entry
 https://djalilovich097.github.io/FreeRide-NFSU2-Launcher/
 
-The old GitHub repository name is retained for URL compatibility. The product is **FreeRide Racing**: one Telegram launcher, two independent games. Public GitHub Pages contains HTML/CSS/JS and a temporary public U2 gateway hostname only. It does NOT contain game files, tickets, private access keys, career ZIPs or Telegram user data.
+The old GitHub repository name is retained for URL compatibility. **The launcher now has three cards**: U2, MW and the Racing Hub. Hub is read-only NFSU2 server status, real ranking data and invitations; it is served from the validated current U2 HTTPS tunnel at `/hub/` without extra monthly cost. The product is **FreeRide Racing**: one Telegram launcher, two independent games. Public GitHub Pages contains HTML/CSS/JS and a temporary public U2 gateway hostname only. It does NOT contain game files, tickets, private access keys, career ZIPs or Telegram user data.
 
 ## Launch contract
 - /racing in @freeride_team_bot opens this page; two cards route to U2 or MW.

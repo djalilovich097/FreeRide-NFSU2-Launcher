@@ -1,4 +1,4 @@
-// FreeRide Racing permanent Telegram launcher: one entry, two isolated games.
+// FreeRide Racing: two isolated games and one public, read-only Racing Hub.
 // No EA files, server credentials, Telegram IDs, or browser saves are stored here.
 (() => {
   'use strict';
@@ -62,6 +62,12 @@
         ? 'Личный пропуск выдаёт @freeride_team_bot после проверки участия в команде.'
         : 'Ссылка на сервер пока недоступна. Можно запросить доступ через бота.';
     $('u2-status').classList.toggle('offline',!u2Origin);
+    const hub=$('open-hub');
+    hub.disabled=!u2Origin;
+    $('hub-status').textContent=u2Origin
+      ? 'Штаб Underground 2. Данные берутся с игрового сервера.'
+      : 'Штаб пока не отвечает. Сервер или временный адрес недоступен.';
+    $('hub-status').classList.toggle('offline',!u2Origin);
   }
   async function loadBridge(){
     try{
@@ -82,10 +88,14 @@
     else toTelegram('nfsplay');
   });
   $('play-mw').addEventListener('click',()=>{
-    // MW owner-only gateway only accepts signed Telegram Web App initData.
-    // A public static page must NOT supply a UID or reuse an access key.
-    // The verified bot issues an owner-restricted WebApp button instead.
+    // MW owner-only access always goes through signed Telegram initData.
     toTelegram('mwplay');
+  });
+  $('open-hub').addEventListener('click',()=>{
+    if(!u2Origin){toast('Racing Hub пока недоступен. Попробуй позже.');return;}
+    // The U2 tunnel exposes ONLY the read-only /hub/ routes publicly.
+    // Navigate in this WebView: Hub does not need Chrome or a game ticket.
+    location.assign(new URL('/hub/',u2Origin).href);
   });
   setU2();void loadBridge();
 })();
