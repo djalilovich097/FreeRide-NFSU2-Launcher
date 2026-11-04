@@ -25,3 +25,7 @@ The old GitHub repository name is retained for URL compatibility. **The launcher
 - Future updates require backups, isolated tests, live acceptance on Telegram + Chrome, and release notes in the respective game/bot repositories.
 
 Related: FreeRide-NFSMW-Web / FREERIDE_RACING_SECURITY_FREEZE_20261105.md, FreeRide-NFSU2-Web / FREERIDE_RACING_SECURITY_FREEZE_20261105.md, FreeRideBot / docs/FREERIDE_RACING_FREEZE_20261105.md.
+
+## Где старые исходники лаунчера после уборки
+
+Архивные worktrees `FreeRide-Racing-Freeze-20261105` и `FreeRide-Racing-Launcher-Lab` перемещены в `C:\Users\FreeRide\FreeRide-Archive\Git-Worktrees\Launcher` через `git worktree move`. Основной репозиторий `FreeRide-NFSU2-Launcher` и GitHub Pages остались на своих местах. Поиск прежних абсолютных путей: `FreeRide-Archive\MOVE_MANIFEST_20261105.json`.
