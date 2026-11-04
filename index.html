@@ -3,51 +3,62 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080f19">
   <meta name="color-scheme" content="dark">
   <meta name="referrer" content="no-referrer">
   <meta http-equiv="Content-Security-Policy" content="default-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'; script-src 'self' https://telegram.org; style-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; upgrade-insecure-requests">
-  <title>FreeRide · Underground 2</title>
+  <title>FreeRide Racing · Игровой лаунчер</title>
   <link rel="stylesheet" href="./styles.css">
   <script src="https://telegram.org/js/telegram-web-app.js" defer></script>
   <script src="./app.js" defer></script>
 </head>
 <body>
-  <main class="page">
-    <header class="head">
-      <div class="monogram" aria-hidden="true">FR</div>
-      <span class="brand">FREERIDE <span>RACING</span></span>
-      <span class="environment">PRIVATE TEST</span>
+  <main class="shell">
+    <header class="masthead">
+      <div class="brandmark" aria-hidden="true"><span>F</span><span>R</span></div>
+      <div class="wordmark"><span>FREERIDE</span><strong>RACING</strong></div>
+      <div class="version"><span class="live-dot"></span> TEST BUILD</div>
     </header>
-    <section class="hero">
-      <p class="eyebrow"><span class="dot"></span> DEVELOPMENT BUILD · NFSU2</p>
-      <h1>UNDERGROUND<br><em>IS BACK.</em></h1>
-      <p class="intro">Оригинальный Underground 2 в браузере. Игровой движок работает на компьютере FreeRide, а этот адрес остаётся постоянным, даже когда тестовый сервер меняется.</p>
-      <div class="tags">
-        <span>PC / CHROME</span>
-        <span>ANDROID / CHROME</span>
-        <span>WEBASSEMBLY</span>
-      </div>
+
+    <section class="intro">
+      <p class="eyebrow">FREE RIDE TEAM / GAME COLLECTION</p>
+      <h1>ОДИН ГАРАЖ.<br><em>ДВЕ ЛЕГЕНДЫ.</em></h1>
+      <p class="subtitle">Твой игровой гараж в Telegram. Выбери игру, получи личный доступ через FreeRideBOT и продолжай свою карьеру.</p>
     </section>
-    <section class="panel" aria-labelledby="entry-title">
-      <div class="panel-head">
-        <div>
-          <p class="mini">ДОСТУП К ТЕСТИРОВАНИЮ</p>
-          <h2 id="entry-title">Запуск игры</h2>
+
+    <section class="library" aria-labelledby="games-heading">
+      <div class="section-heading"><h2 id="games-heading">ИГРОВАЯ БИБЛИОТЕКА</h2><span>02 / AVAILABLE</span></div>
+      <article class="game-card underground">
+        <div class="game-art" aria-hidden="true"><div class="art-city"></div><div class="art-number">02</div><span class="art-tag">BAYVIEW · NIGHT RUN</span></div>
+        <div class="game-body">
+          <div class="game-meta"><span class="state"><span class="indicator"></span> ONLINE RACING</span><span class="year">2004</span></div>
+          <h3>NEED FOR SPEED<br><strong>UNDERGROUND 2</strong></h3>
+          <p>Ночные гонки, тюнинг и Free Roam. Отдельная карьера, онлайн и рейтинги команды.</p>
+          <div class="chips"><span>PC / CHROME</span><span>ANDROID / CHROME</span></div>
+          <button id="play-u2" type="button" class="play-button">ИГРАТЬ В UNDERGROUND 2 <span aria-hidden="true">↗</span></button>
+          <p id="u2-status" class="game-status" role="status">Проверяем адрес закрытого сервера…</p>
         </div>
-        <span class="private"><span class="lock" aria-hidden="true">●</span> Закрытая версия</span>
-      </div>
-      <p id="service-status" class="status" role="status">Проверяем адрес игрового сервера…</p>
-      <p class="help">Участникам FreeRide Team больше не нужен ручной ключ. Нажми кнопку, получи личный пропуск через Telegram и играй в Chrome.</p>
-      <button id="launch" class="launch" type="button" disabled><span>ЗАПУСТИТЬ NFSU2</span><span aria-hidden="true">↗</span></button>
-      <button id="copy" class="copy" type="button" disabled>Скопировать временную ссылку для Chrome</button>
-      <p id="message" class="message" role="status" aria-live="polite"></p>
+      </article>
+
+      <article class="game-card wanted">
+        <div class="game-art" aria-hidden="true"><div class="art-road"></div><div class="art-number">15</div><span class="art-tag">ROCKPORT · BLACKLIST</span></div>
+        <div class="game-body">
+          <div class="game-meta"><span class="state amber"><span class="indicator"></span> PRIVATE PREVIEW</span><span class="year">2005</span></div>
+          <h3>NEED FOR SPEED<br><strong>MOST WANTED</strong></h3>
+          <p>Рокпорт, Чёрный список и погони. Русский интерфейс и собственные облачные сохранения MW.</p>
+          <div class="chips"><span>CHROME / TELEGRAM</span><span>OWNER ACCESS</span></div>
+          <button id="play-mw" type="button" class="play-button amber">ИГРАТЬ В MOST WANTED <span aria-hidden="true">↗</span></button>
+          <p id="mw-status" class="game-status" role="status">Доступ к тестовой версии выдаёт FreeRideBOT.</p>
+        </div>
+      </article>
     </section>
-    <section class="details">
-      <div class="detail"><strong>01</strong><span>Игра запускается во внешнем Chrome, если Telegram не поддерживает WebAssembly threads.</span></div>
-      <div class="detail"><strong>02</strong><span>Доступ выдаёт бот после проверки участия в FreeRide Team. Игровые файлы по-прежнему закрыты.</span></div>
-      <div class="detail"><strong>03</strong><span>Пока сервер расположен на тестовом ПК, он может быть недоступен, когда компьютер выключен.</span></div>
+
+    <section class="foot-panel">
+      <div class="foot-icon" aria-hidden="true">⌁</div>
+      <div><h2>ПРОГРЕСС НЕ СМЕШИВАЕТСЯ</h2><p>У каждой игры отдельные сохранения и проверка доступа. Этот лаунчер не хранит пароли, игровые файлы или личные профили.</p></div>
     </section>
-    <footer>FREERIDE RACING · ENGINEERING PREVIEW <span>NO GAME DATA HOSTED HERE</span></footer>
+    <footer class="footer"><span>FREERIDE RACING / 2026</span><span>BUILT FOR THE TEAM</span></footer>
   </main>
+  <div id="toast" role="status" aria-live="polite" class="toast" hidden></div>
 </body>
 </html>
