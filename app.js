@@ -6,12 +6,10 @@
   const bot='https://t.me/freeride_team_bot';
   const params=new URLSearchParams(location.hash.slice(1));
   const rawTicket=params.get('ticket')||'';
-  const rawAccess=params.get('access')||'';
   const ticketPattern=/^[A-Za-z0-9_-]{30,280}\.[A-Za-z0-9_-]{43}$/;
-  const accessPattern=/^[A-Za-z0-9_-]{32,80}$/;
   const ticket=ticketPattern.test(rawTicket)?rawTicket:'';
-  // Legacy admin mode is kept for established private tests; never shown in UI.
-  const legacy=accessPattern.test(rawAccess)?rawAccess:'';
+  // Old #access operator passwords are deliberately ignored. Only verified
+  // Telegram-issued one-use U2 tickets can enter the protected gateway.
   if(location.hash)history.replaceState(null,'',location.pathname+location.search);
   const tg=window.Telegram?.WebApp;
   try{tg?.ready?.();tg?.expand?.();}catch{}
@@ -49,14 +47,13 @@
     toast('Если браузер не открылся, разреши запуск внешних ссылок в Telegram.');
   }
   function u2LaunchUrl(){
-    if(!u2Origin||(!ticket&&!legacy))return null;
+    if(!u2Origin||!ticket)return null;
     const u=new URL('/',u2Origin);
-    if(ticket)u.searchParams.set('fr_ticket',ticket);
-    else u.searchParams.set('fr_access',legacy);
+    u.searchParams.set('fr_ticket',ticket);
     return u.href;
   }
   function setU2(){
-    const ready=Boolean(ticket||legacy);
+    const ready=Boolean(ticket);
     $('play-u2').disabled=false;
     $('play-u2').firstChild.textContent=ready?'ЗАПУСТИТЬ UNDERGROUND 2 ':'ПОЛУЧИТЬ ДОСТУП К U2 ';
     $('u2-status').textContent=ready

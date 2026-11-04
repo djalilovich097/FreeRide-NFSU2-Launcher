@@ -59,8 +59,21 @@ def run():
     event=page.evaluate("window.testEvents.at(-1)")
     assert event["name"]=="web_app_open_link" and event["try_browser"]=="chrome",event
     assert event["url"].endswith("/?fr_ticket="+ticket),event
-    assert "phone-auctions-stock-removable.trycloudflare.com" in event["url"],event
+    expected=json.loads((ROOT/"bridge.json").read_text(encoding="utf8"))["tunnel"]
+    assert event["url"].startswith(expected),event
     print("RACING_U2_EXISTING_TICKET_CHROME_BRIDGE_PASS",flush=True)
+
+    # A legacy admin #access fragment must NEVER become ?fr_access in a
+    # game URL; it is not proof of Telegram identity.
+    page.goto("about:blank")
+    page.goto(url+"#access="+"A"*43,wait_until="domcontentloaded")
+    page.wait_for_timeout(500)
+    assert "#" not in page.url
+    page.locator("#play-u2").click()
+    event=page.evaluate("window.testEvents.at(-1)")
+    assert event["name"]=="web_app_open_tg_link",event
+    assert event["path"]=="/freeride_team_bot?start=nfsplay",event
+    print("RACING_LEGACY_OPERATOR_LINK_REJECTED_PASS",flush=True)
 
     ctx2=browser.new_context(viewport={"width":1360,"height":860})
     ctx2.route("https://telegram.org/**",lambda route:route.abort())
